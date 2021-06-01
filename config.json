@@ -5,7 +5,7 @@
     "login_user_input": "#username",
     "login_password_input": "#password",
     "username": "yujf38799",
-    "password": "Minanyuan01",
+    "password": "1111",
     "submit": ".btn-submit",
     "logout_path": "/account/logout.aspx"
   },

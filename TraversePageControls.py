@@ -1,5 +1,6 @@
 import json
 import os
+import time
 import urllib
 from selenium import webdriver
 from login import Login
@@ -19,6 +20,7 @@ class TraversePageControls(object):
         chrome_options.add_experimental_option("prefs", prefs)
         self.driver = webdriver.Chrome(chrome_options=chrome_options)
         self.driver.implicitly_wait(1)
+        self.driver.maximize_window()
         # 登录
         Login(self.driver, self.config).do_login()
 
@@ -96,6 +98,7 @@ class TraversePageControls(object):
         for log in logs:
             if log['level'] == 'WARNING':
                 print(log)
+                driver.get_screenshot_as_file(os.path.join(os.getcwd(),'report','img',str(time.time())+'.png'))
 
     def page_rule_matching(self, driver):
         try:
