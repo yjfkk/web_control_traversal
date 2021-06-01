@@ -3,11 +3,9 @@ import os
 
 
 class Login(object):
-    def __init__(self, driver):
-        with open(os.path.join(os.getcwd(), 'config.json')) as f:
-            config = f.read()
-            self.config = json.loads(config)
-            self.driver = driver
+    def __init__(self, driver,config):
+        self.driver = driver
+        self.config = config
 
     def do_login(self):
         try:

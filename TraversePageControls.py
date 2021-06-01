@@ -6,18 +6,21 @@ from login import Login
 
 
 class TraversePageControls(object):
-    def __init__(self, home_page):
+    def __init__(self, config):
+        # 类变量设置
+        self.home_page = config['home_page']
+        self.config = config
+        self.inspected_path = ['/']
+        self.host_name = ''
+        self.to_inspect_urls = []
+        # 初始化浏览器
         chrome_options = webdriver.ChromeOptions()
         prefs = {"profile.managed_default_content_settings.images": 2}
         chrome_options.add_experimental_option("prefs", prefs)
         self.driver = webdriver.Chrome(chrome_options=chrome_options)
-        self.home_page = home_page
         self.driver.implicitly_wait(1)
-        self.driver
-        Login(self.driver).do_login()
-        self.inspected_path = ['/']
-        self.host_name = ''
-        self.to_inspect_urls = []
+        # 登录
+        Login(self.driver, self.config).do_login()
 
     def __del__(self):
         self.driver.close()
@@ -99,7 +102,6 @@ if __name__ == '__main__':
     with open(os.path.join(os.getcwd(), 'config.json')) as f:
         config = f.read()
         config = json.loads(config)
-    tpc = TraversePageControls(config['home_page'])
-    tpc.inspected_path.append(config['logout_path'])
+    tpc = TraversePageControls(config)
     tpc.main()
     print(tpc.inspected_path)
