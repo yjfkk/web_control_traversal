@@ -3,7 +3,7 @@ import os
 import time
 import urllib
 from selenium import webdriver
-from login import Login
+from manager.Login import Login
 
 
 class TraversePageControls(object):
