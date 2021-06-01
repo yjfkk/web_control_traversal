@@ -1,5 +1,6 @@
 import json
 import os
+import time
 
 
 class Login(object):
@@ -19,3 +20,4 @@ class Login(object):
             submit.click()
         except Exception as e:
             print('登录失败，请debug进行调试:'+str(e.args))
+        time.sleep(10)

@@ -18,9 +18,9 @@ class TraversePageControls(object):
         chrome_options = webdriver.ChromeOptions()
         # prefs = {"profile.managed_default_content_settings.images": 2}
         # chrome_options.add_experimental_option("prefs", prefs)
-        chrome_options.add_argument('--headless')
+        # chrome_options.add_argument('--headless')
         self.driver = webdriver.Chrome(chrome_options=chrome_options)
-        self.driver.implicitly_wait(1)
+        self.driver.implicitly_wait(10)
         self.driver.maximize_window()
         # 登录
         Login(self.driver, self.config).do_login()
@@ -30,6 +30,7 @@ class TraversePageControls(object):
 
     def get_to_inspect_urls(self):
         self.driver.get(self.home_page)
+        time.sleep(5)
         all_urls = self.driver.find_elements_by_tag_name('a')
         for one_url in all_urls:
             try:
@@ -56,6 +57,8 @@ class TraversePageControls(object):
                     if self.url_verify(url_str):
                         url_parse = urllib.parse.urlparse(url_str)
                         self.inspected_path.append(url_parse.path)
+                        if not url.is_enabled():
+                            continue
                         url.click()
                         self.page_rule_matching(self.driver)
                         self.get_browser_log(self.driver)
