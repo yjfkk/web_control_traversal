@@ -54,11 +54,11 @@ class TraversePageControls(object):
                         url_parse = urllib.parse.urlparse(url_str)
                         self.inspected_path.append(url_parse.path)
                         url.click()
+                        self.page_rule_matching(self.driver)
+                        self.get_browser_log(self.driver)
                         hands = self.driver.window_handles
                         if len(hands) > 1:
                             self.driver.switch_to.window(hands[-1])
-                            self.driver.title
-                            self.get_browser_log(self.driver)
                             self.driver.close()
                             self.driver.switch_to.window(hands[0])
                             self.get_browser_log(self.driver)
@@ -97,9 +97,26 @@ class TraversePageControls(object):
             if log['level'] == 'WARNING':
                 print(log)
 
+    def page_rule_matching(self, driver):
+        try:
+            page_title = driver.title
+            page_content = driver.page_source
+
+            must_not_contain_title = self.config['page_rules']['must_not_contain']['title']
+            must_not_contain_content = self.config['page_rules']['must_not_contain']['content']
+
+            must_contain_title = self.config['page_rules']['must_contain']['title']
+            must_contain_content = self.config['page_rules']['must_contain']['content']
+
+            if page_title.find(must_not_contain_title) != -1 or page_content.find(must_not_contain_content) != -1:
+                print('页面规则校验出错1')
+            if page_title.find(must_contain_title) == -1 or page_content.find(must_contain_content) == -1:
+                print('页面规则校验出错2')
+        except Exception as e:
+            print('页面规则校验出错：'+str(e.args))
 
 if __name__ == '__main__':
-    with open(os.path.join(os.getcwd(), 'config.json')) as f:
+    with open(os.path.join(os.getcwd(), 'config.json'), 'rb') as f:
         config = f.read()
         config = json.loads(config)
     tpc = TraversePageControls(config)

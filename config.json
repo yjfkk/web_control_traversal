@@ -1,10 +1,22 @@
 {
-  "home_page":"https://www.19lou.com/",
-  "login_page": "https://hs-cas.hundsun.com/cas/login?service=https://home.hundsun.com/SynLogin.aspx",
-  "login_user_input": "#username",
-  "login_password_input": "#password",
-  "username": "yujf38799",
-  "password": "Minanyuan01",
-  "submit": ".btn-submit",
-  "logout_path": "/account/logout.aspx"
+  "home_page": "https://www.19lou.com/",
+  "login": {
+    "login_page": "https://hs-cas.hundsun.com/cas/login?service=https://home.hundsun.com/SynLogin.aspx",
+    "login_user_input": "#username",
+    "login_password_input": "#password",
+    "username": "yujf38799",
+    "password": "Minanyuan01",
+    "submit": ".btn-submit",
+    "logout_path": "/account/logout.aspx"
+  },
+  "page_rules": {
+    "must_not_contain": {
+      "title": "404",
+      "content": "错误"
+    },
+    "must_contain": {
+      "title": "",
+      "content": ""
+    }
+  }
 }
