@@ -16,8 +16,9 @@ class TraversePageControls(object):
         self.to_inspect_urls = []
         # 初始化浏览器
         chrome_options = webdriver.ChromeOptions()
-        prefs = {"profile.managed_default_content_settings.images": 2}
-        chrome_options.add_experimental_option("prefs", prefs)
+        # prefs = {"profile.managed_default_content_settings.images": 2}
+        # chrome_options.add_experimental_option("prefs", prefs)
+        chrome_options.add_argument('--headless')
         self.driver = webdriver.Chrome(chrome_options=chrome_options)
         self.driver.implicitly_wait(1)
         self.driver.maximize_window()
@@ -98,7 +99,10 @@ class TraversePageControls(object):
         for log in logs:
             if log['level'] == 'WARNING':
                 print(log)
-                driver.get_screenshot_as_file(os.path.join(os.getcwd(),'report','img',str(time.time())+'.png'))
+                width = driver.execute_script("return document.documentElement.scrollWidth")
+                height = driver.execute_script("return document.documentElement.scrollHeight")
+                driver.set_window_size(width, height)
+                driver.save_screenshot(os.path.join(os.getcwd(),'report','img',str(time.time())+'.png'))
 
     def page_rule_matching(self, driver):
         try:
